@@ -12,7 +12,7 @@ const httpServer = http.createServer(app);
 
    app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
   })
    )
 
@@ -25,7 +25,7 @@ const httpServer = http.createServer(app);
          
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
   },
 })
