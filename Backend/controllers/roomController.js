@@ -75,39 +75,7 @@ function joinRoom(io, socket, data = {}, callback) {
             console.log(`${participant.username} joined ${normalizedRoomId}`)
 }
 
-function removeParticipant(io, socket, roomId) {
-  const room = rooms.get(roomId)
 
-  if (!room) return
-
-    const participant = room.participants.get(socket.id)
-
-    if (!participant) return
-
-    room.participants.delete(socket.id)
-
-  if (room.hostId === socket.id) {
-    // prefer a moderator as the next host otherwise the longest-waiting guest
-    const candidates = Array.from(room.participants.values())
-        const nextHost =
-           candidates.find((p) => p.role === ROLES.MODERATOR) || candidates[0]
-
-    if (nextHost) {
-        room.hostId = nextHost.id
-            nextHost.role = ROLES.HOST
-    }
-  }
-
-  if (room.participants.size === 0) {
-    rooms.delete(roomId)
-        console.log("Room deleted:", roomId)
-    return
-  }
-
-      broadcastParticipants(io, roomId)
-
-         console.log(`${participant.username} left ${roomId}`)
-}
 
 function kickParticipant(io, socket, data = {}, callback) {
   const { roomId, targetId } = data;
@@ -206,3 +174,37 @@ target.role = role;
 }
 
 module.exports = {createRoom,joinRoom,removeParticipant,kickParticipant,transferHost,assignRole,};
+
+function removeParticipant(io, socket, roomId) {
+  const room = rooms.get(roomId)
+
+  if (!room) return
+
+    const participant = room.participants.get(socket.id)
+
+    if (!participant) return
+
+    room.participants.delete(socket.id)
+
+  if (room.hostId === socket.id) {
+    // prefer a moderator as the next host otherwise the longest-waiting guest
+    const candidates = Array.from(room.participants.values())
+        const nextHost =
+           candidates.find((p) => p.role === ROLES.MODERATOR) || candidates[0]
+
+    if (nextHost) {
+        room.hostId = nextHost.id
+            nextHost.role = ROLES.HOST
+    }
+  }
+
+  if (room.participants.size === 0) {
+    rooms.delete(roomId)
+        console.log("Room deleted:", roomId)
+    return
+  }
+
+      broadcastParticipants(io, roomId)
+
+         console.log(`${participant.username} left ${roomId}`)
+}

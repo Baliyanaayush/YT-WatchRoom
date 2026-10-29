@@ -1,6 +1,6 @@
 # watchRoom
 A real-time YouTube watch party. Create a room, share the code or link, and everyone in the room watches the same video in sync. The host (and any moderators) control playback; everyone else just watches.
-Live demo: `<add your deployed URL here>`
+Live demo: `https://client-sigma-dun-64.vercel.app/`
 
 ## Features
 
@@ -116,7 +116,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`.
+Open `hhttps://client-sigma-dun-64.vercel.app/`.
 
 **3. Try it with multiple users**
 
